@@ -4,7 +4,6 @@ export let bufferedRecipe = []
 
 
 export const drawArticle = () => {
-console.log(bufferedRecipe[0])
 const main = document.querySelector('main')
 main.replaceChildren()
 bufferedRecipe[0].forEach( (recipe) => {

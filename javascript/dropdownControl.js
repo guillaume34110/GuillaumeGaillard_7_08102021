@@ -44,7 +44,7 @@ const dropdownSelection = (target) => {
 const toggleDropDown = () => {
 
     if (dropdownForm.classList.contains("dropdown-form-active")) {
-         dropdownForm.classList.remove("dropdown-form-20")
+        dropdownForm.classList.remove("dropdown-form-20")
         list.classList.remove("dropdown-20")
         btn.classList.remove("dropdown-20")
         dropdownForm.classList.remove("dropdown-form-10")
@@ -54,7 +54,7 @@ const toggleDropDown = () => {
         list.classList.remove("dropdown-list-active")
         btn.classList.remove("btn-active")
         icon.style.transform = "rotate(0deg)"
-       
+
     } else {
         dropdownForm.classList.add("dropdown-form-active")
         list.classList.add("dropdown-list-active")
@@ -63,48 +63,58 @@ const toggleDropDown = () => {
         icon.style.transform = "rotate(180deg)"
     }
 }
-const fillList = () => {
-    const limit = 30
-    const tagsArray = []
-    list.replaceChildren()
-    console.log(bufferedRecipe[0])
-    bufferedRecipe[0].forEach(recipe => {
-       
-    if (key === "ingredients") {
-            recipe[key].forEach(ingredient => {
-                console.log(ingredient)
-                if (!tagsArray.includes(ingredient.ingredient)) tagsArray.push(ingredient.ingredient)
-            }) 
-    } else if(key === "appliance") {
-            if (!tagsArray.includes(recipe[key])) tagsArray.push(recipe[key]) 
-    } else if (key === "ustensils"){
-            recipe[key].forEach(ustensil => {
-                if (!tagsArray.includes(ustensil)) tagsArray.push(ustensil)
-        })
-    }
-})
+export const fillList = () => {
 
-    for (let i = 0; i < limit; i++) {
-        if (tagsArray[i]){
-            const newLi = document.createElement("li")
-            const newHtml = `${tagsArray[i]}`
-            newLi.innerHTML = newHtml
-            list.appendChild(newLi)
-        }else if (btn.classList.contains("btn-active")){
-            
-            if (i<20 && i>10) {
-                console.log(i)
-                dropdownForm.classList.add("dropdown-form-20")
-                list.classList.add("dropdown-20")
-                btn.classList.add("dropdown-20")
-               
-            } else if (i<10){
-                dropdownForm.classList.add("dropdown-form-10")
-                list.classList.add("dropdown-10")
-                btn.classList.add("dropdown-10")
+    if (list) {
+        const limit = 30
+        const tagsArray = []
+        list.replaceChildren()
+        console.log(bufferedRecipe[0])
+        bufferedRecipe[0].forEach(recipe => {
+
+            if (key === "ingredients") {
+                recipe[key].forEach(ingredient => {
+                    console.log(ingredient)
+                    if (!tagsArray.includes(ingredient.ingredient)) tagsArray.push(ingredient.ingredient)
+                })
+            } else if (key === "appliance") {
+                if (!tagsArray.includes(recipe[key])) tagsArray.push(recipe[key])
+            } else if (key === "ustensils") {
+                recipe[key].forEach(ustensil => {
+                    if (!tagsArray.includes(ustensil)) tagsArray.push(ustensil)
+                })
             }
-        i = limit
+        })
+
+        for (let i = 0; i < limit; i++) {
+            if (tagsArray[i]) {
+                const newLi = document.createElement("li")
+                const newHtml = `${tagsArray[i]}`
+                newLi.innerHTML = newHtml
+                list.appendChild(newLi)
+            } else if (btn.classList.contains("btn-active")) {
+
+                if (i < 20 && i > 10) {
+                    console.log(i)
+                    dropdownForm.classList.add("dropdown-form-20")
+                    list.classList.add("dropdown-20")
+                    btn.classList.add("dropdown-20")
+                    list.classList.remove("dropdown-10")
+                    btn.classList.remove("dropdown-10")
+                } else if (i < 10) {
+                    dropdownForm.classList.add("dropdown-form-10")
+                    list.classList.add("dropdown-10")
+                    btn.classList.add("dropdown-10")
+                    list.classList.remove("dropdown-20")
+                    btn.classList.remove("dropdown-20")
+                } else {
+                    list.classList.remove("dropdown-20")
+                    btn.classList.remove("dropdown-20")
+                    list.classList.remove("dropdown-10")
+                    btn.classList.remove("dropdown-10")
+                }
+                i = limit
+            }
         }
     }
-
-    }
+}
