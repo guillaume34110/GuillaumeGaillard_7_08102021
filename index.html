@@ -20,18 +20,18 @@
         <img class="logo" src="./assets/logo.png" alt="page d'acceuil" />
         <h1>Les petits plats</h1>
         <div class="form-group">
-            <input type="text" class="form-control main-search" id="shearch" aria-describedby="search"
+            <input type="text" class="form-control main-search" id="shearch" 
                 placeholder="Recherchez une recette selon son nom , ses ingredients ou sa description">
             <i class="fas fa-search"></i>
         </div>
-        <section class="d-flex flex-column justify-content-start align-self-start">
+        <nav class="d-flex flex-column justify-content-start align-self-start">
             <ul class = "tags d-flex"></ul>
             <div class="d-flex justify-content-start align-self-start">
             <div class = "d-flex flex-column align-items-center justify-content-center dropdown-container">
                 <button type="button" class="btn btn-primary btn-ingredients ingredients">Ingredients <i
                         class="fas fa-chevron-down ingredients i-ingredients"></i></button>
                 <input type="text" class="form-control dropdown-form input-ingredients ingredients" id="shearch-ingredients"
-                    aria-describedby="chercez un ingerdient"
+                    
                     placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette">
                 <ul class="ingredients dropdown-list dropdown-list-ingredients"></ul>
             </div>
@@ -39,18 +39,18 @@
                 <button type="button" class="btn btn-success btn-appareil appareil">Appareil <i
                         class="fas fa-chevron-down appareil i-appareil"></i></button>
                 <input type="text" class="form-control dropdown-form input-appareil appareil" id="shearch-appareil"
-                    aria-describedby="cherchez un appareil" placeholder="Rechercher un appareil">
+                    placeholder="Rechercher un appareil">
                 <ul class="appareils dropdown-list dropdown-list-appareil"></ul>
             </div>
             <div class = "d-flex flex-column align-items-center justify-content-center dropdown-container">
                 <button type="button" class="btn btn-danger btn-ustensiles ustensiles">Ustensiles <i
                         class="fas fa-chevron-down ustensiles i-ustensiles"></i></button>
                 <input type="text" class="form-control dropdown-form ustensiles input-ustensiles" id="shearch-ustensiles"
-                    aria-describedby="cerchez un ustensile" placeholder="Rechercher un ustensile">
+                     placeholder="Rechercher un ustensile">
                 <ul class="ustensile dropdown-list dropdown-list-ustensiles"></ul>
             </div>
         </div>
-        </section>
+        </nav>
     </header>
     <main class = "d-flex flex-row flex-wrap justify-content-around">
 
