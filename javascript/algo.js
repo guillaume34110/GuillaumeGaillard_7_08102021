@@ -13,10 +13,10 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                                 bufferedRecipe[0].forEach(recipe => {
                                     if (recipe === recipeArray[i]) bufferToken = true
                                 })
-                                if (!bufferToken){
+                                if (!bufferToken) {
                                     bufferedRecipe[0].push(recipeArray[i])
                                     drawArticle()
-                                } 
+                                }
                             }
                         }
                     } else if (sortingPathArray[s] === "ustensils") {
@@ -26,10 +26,10 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                                 bufferedRecipe[0].forEach(recipe => {
                                     if (recipe === recipeArray[i]) bufferToken = true
                                 })
-                                if (!bufferToken){
+                                if (!bufferToken) {
                                     bufferedRecipe[0].push(recipeArray[i])
                                     drawArticle()
-                                } 
+                                }
                             }
                         }
                     } else {
@@ -49,7 +49,7 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
         }
     }
 }
-export const fastCheck = ( sortingPathArray, sortingValues) => {
+export const fastCheck = (sortingPathArray, sortingValues) => {
     for (let h = 0; h < sortingValues.length; h++) {
         if (sortingValues[h].length > 0) {
             for (let i = 0; i < bufferedRecipe[0].length; i++) {
@@ -83,6 +83,51 @@ export const fastCheck = ( sortingPathArray, sortingValues) => {
     }
 }
 
-const slowAlgorytm = () => {
-
+export const slowAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
+    sortingPathArray.forEach(s => {
+        sortingValues.forEach(h => {
+            if (h.length > 0) {
+                recipeArray.forEach(i => {
+                    if (s === "ingredients") {
+                        i.ingredients.forEach(a => {
+                            if (a.ingredient.toLowerCase().includes(h.toLowerCase())) {
+                                let bufferToken = false
+                                bufferedRecipe[0].forEach(recipe => {
+                                    if (recipe === i) bufferToken = true
+                                })
+                                if (!bufferToken) {
+                                    bufferedRecipe[0].push(i)
+                                    drawArticle()
+                                }
+                            }
+                        })
+                    } else if (s === "ustensils") {
+                        i.ustensils.forEach(a => {
+                            if (a.toLowerCase().includes(h.toLowerCase())) {
+                                let bufferToken = false
+                                bufferedRecipe[0].forEach(recipe => {
+                                    if (recipe === i) bufferToken = true
+                                })
+                                if (!bufferToken) {
+                                    bufferedRecipe[0].push(i)
+                                    drawArticle()
+                                }
+                            }
+                        })
+                    } else {
+                        if (i[s].toLowerCase().includes(h.toLowerCase())) {
+                            let bufferToken = false
+                            bufferedRecipe[0].forEach(recipe => {
+                                if (recipe === i) bufferToken = true
+                            })
+                            if (!bufferToken) {
+                                bufferedRecipe[0].push(i)
+                                drawArticle()
+                            }
+                        }
+                    }
+                })
+            }
+        })
+    })
 }

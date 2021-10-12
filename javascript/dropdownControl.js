@@ -13,11 +13,15 @@ let key
 
 const openDropdown = (e) => {
     const target = e.target
+    onlyOneDropdown(target)
     dropdownSelection(target)
     toggleDropDown()
     fillList()
 }
-
+const onlyOneDropdown = (target) => {
+    const activeDropdown = document.querySelector(".dropdown-form-active")
+    if (activeDropdown && !activeDropdown.classList.contains(`input-${target.classList[3]}`) ) toggleDropDown()
+}
 
 const dropdownSelection = (target) => {
     if (target.classList.contains("ingredients")) {

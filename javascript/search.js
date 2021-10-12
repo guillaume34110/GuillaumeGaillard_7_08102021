@@ -1,5 +1,5 @@
 import { recipes } from "../data/recipes.js"
-import { fastAlgorytm, fastCheck } from "./algo.js"
+import {  fastCheck, fastAlgorytm } from "./algo.js"
 import { bufferedRecipe, drawArticle } from "./drawArticle.js"
 import { fillList } from "./dropdownControl.js"
 import { splitClean } from "./splitClean.js"
