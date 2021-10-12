@@ -10,9 +10,9 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                         for (let a = 0; a < recipeArray[i].ingredients.length; a++) {
                             if (recipeArray[i].ingredients[a].ingredient.toLowerCase().includes(sortingValues[h].toLowerCase())) {
                                 let bufferToken = false
-                                bufferedRecipe[0].forEach(recipe => {
-                                    if (recipe === recipeArray[i]) bufferToken = true
-                                })
+                                for (let r =0 ; r<bufferedRecipe[0].length; r++) {
+                                    if (bufferedRecipe[0][r] === recipeArray[i]) bufferToken = true
+                                }
                                 if (!bufferToken) {
                                     bufferedRecipe[0].push(recipeArray[i])
                                     drawArticle()
@@ -23,9 +23,9 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                         for (let a = 0; a < recipeArray[i].ustensils.length; a++) {
                             if (recipeArray[i].ustensils[a].toLowerCase().includes(sortingValues[h].toLowerCase())) {
                                 let bufferToken = false
-                                bufferedRecipe[0].forEach(recipe => {
-                                    if (recipe === recipeArray[i]) bufferToken = true
-                                })
+                                for (let r =0 ; r<bufferedRecipe[0].length; r++) {
+                                    if (bufferedRecipe[0][r] === recipeArray[i]) bufferToken = true
+                                }
                                 if (!bufferToken) {
                                     bufferedRecipe[0].push(recipeArray[i])
                                     drawArticle()
