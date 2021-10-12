@@ -5,7 +5,7 @@ export let bufferedRecipe = []
 
 export const drawArticle = () => {
 const main = document.querySelector('main')
-main.replaceChildren()
+main.replaceChildren()//clean the main
 bufferedRecipe[0].forEach( (recipe) => {
     const newArcticle = document.createElement('article')
     recipe.ingredients.map(e => {

@@ -2,14 +2,28 @@ import { bufferedRecipe } from "./drawArticle.js"
 import { appareilSearch, ingredientsSearch, search, tagSearch, ustensilesSearch } from "./search.js"
 import { splitClean } from "./splitClean.js"
 
-export const dropDownEventListeners = () => {
-    document.querySelectorAll(".btn").forEach((e) => e.addEventListener("click", openDropdown))
-}
+
 let dropdownForm
 let btn
 let icon
 let list
 let key
+
+
+export const dropDownEventListeners = () => {
+    document.querySelectorAll(".btn").forEach((e) => e.addEventListener("click", openDropdown))
+}
+
+export const fillList = () => { // inscrit les tags dans les differentes listes
+
+    if (list) {
+        const limit = 30
+        list.replaceChildren()
+        let tagsArray = tagRecover(bufferedRecipe[0])
+        tagsArray = tagSearchSorting(tagsArray)
+        createDropDownNewElements(tagsArray,limit)
+    }
+}
 
 const openDropdown = (e) => {
     const target = e.target
@@ -18,6 +32,32 @@ const openDropdown = (e) => {
     toggleDropDown()
     fillList()
 }
+const removeTag = (e) => {
+    const tagLi = e.target
+    const tag = e.target.parentNode
+    let arrayToSearch
+    if (tag.classList.contains("tag-ingredient")) arrayToSearch = ingredientsSearch[0] 
+    else if (tag.classList.contains("tag-appliance")) arrayToSearch = appareilSearch[0]
+    else if (tag.classList.contains("tag-ustensils")) arrayToSearch = ustensilesSearch[0]
+    const oldSearchTag = tagLi.id.split(" ")
+    splitClean(oldSearchTag)
+    removeOldTags(oldSearchTag,arrayToSearch)
+    tag.remove();
+    search()
+}
+
+const removeOldTags = (removingTagsArray,arrayToSearch) => {
+    removingTagsArray.forEach(oldTag => {
+        for (let i = 0; i < arrayToSearch.length; i++) {
+            if (oldTag.toLowerCase().includes(arrayToSearch[i].toLowerCase()) || arrayToSearch[i].toLowerCase().includes(oldTag.toLowerCase())) {
+                arrayToSearch.splice(i, 1)
+                i -= 1
+            }
+        }
+    })
+    console.log(arrayToSearch , removingTagsArray);
+}
+
 const onlyOneDropdown = (target) => {
     const activeDropdown = document.querySelector(".dropdown-form-active")
     if (activeDropdown && !activeDropdown.classList.contains(`input-${target.classList[3]}`) ) toggleDropDown()
@@ -141,16 +181,7 @@ const createDropDownNewElements = (tagsArray ,limit) => {
 
     }
 }
-export const fillList = () => { // inscrit les tags dans les differentes listes
 
-    if (list) {
-        const limit = 30
-        list.replaceChildren()
-        let tagsArray = tagRecover(bufferedRecipe[0])
-        tagsArray = tagSearchSorting(tagsArray)
-        createDropDownNewElements(tagsArray,limit)
-    }
-}
 
 const cleanInput = (className) => {
 const input = document.querySelector(`.${className}`)
@@ -178,7 +209,7 @@ const createTags = (e) => {
     } 
     newTag.innerHTML = newHtml
     tagsList.appendChild(newTag)
-    newTag.addEventListener("click", removeTag)
+    newTag.children[0].addEventListener("click", removeTag)
     const newSearchTag = tagLi.innerText.split(" ")
     splitClean(newSearchTag)
     newSearchTag.forEach(nT => {
@@ -199,29 +230,3 @@ const addNewTag = (tagsArray , newTag) => {
     if (tagToken === 0) tagsArray.push(newTag)
 }
 
-const removeTag = (e) => {
-    console.log(e)
-    const tagLi = e.target
-    const tag = e.target.parentNode
-    let arrayToSearch
-    if (tag.classList.contains("tag-ingredient")) arrayToSearch = ingredientsSearch[0] 
-    else if (tag.classList.contains("tag-appliance")) arrayToSearch = appareilSearch[0]
-    else if (tag.classList.contains("tag-ustensils")) arrayToSearch = ustensilesSearch[0]
-    const oldSearchTag = tagLi.id.split(" ")
-    splitClean(oldSearchTag)
-    removeOldTags(oldSearchTag,arrayToSearch)
-    tag.remove();
-    search()
-}
-
-const removeOldTags = (removingTagsArray,arrayToSearch) => {
-    removingTagsArray.forEach(oldTag => {
-        for (let i = 0; i < arrayToSearch.length; i++) {
-            if (oldTag.toLowerCase().includes(arrayToSearch[i].toLowerCase()) || arrayToSearch[i].toLowerCase().includes(oldTag.toLowerCase())) {
-                arrayToSearch.splice(i, 1)
-                i -= 1
-            }
-        }
-    })
-    console.log(arrayToSearch , removingTagsArray);
-}
