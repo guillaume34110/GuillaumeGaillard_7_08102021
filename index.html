@@ -24,8 +24,9 @@
                 placeholder="Recherchez une recette selon son nom , ses ingredients ou sa description">
             <i class="fas fa-search"></i>
         </div>
-        <section class="d-flex justify-content-start align-self-start">
-            <ul class = "tags"></ul>
+        <section class="d-flex flex-column justify-content-start align-self-start">
+            <ul class = "tags d-flex"></ul>
+            <div class="d-flex justify-content-start align-self-start">
             <div class = "d-flex flex-column align-items-center justify-content-center dropdown-container">
                 <button type="button" class="btn btn-primary btn-ingredients ingredients">Ingredients <i
                         class="fas fa-chevron-down ingredients i-ingredients"></i></button>
@@ -48,6 +49,7 @@
                     aria-describedby="cerchez un ustensile" placeholder="Rechercher un ustensile">
                 <ul class="ustensile dropdown-list dropdown-list-ustensiles"></ul>
             </div>
+        </div>
         </section>
     </header>
     <main class = "d-flex flex-row flex-wrap justify-content-around">

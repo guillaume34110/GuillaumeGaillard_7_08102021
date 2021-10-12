@@ -44,7 +44,6 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
 export const fastCheck = ( sortingPathArray, sortingValues) => {
     for (let h = 0; h < sortingValues.length; h++) {
         if (sortingValues[h].length > 0) {
-            console.log(sortingValues[h])
             for (let i = 0; i < bufferedRecipe[0].length; i++) {
                 let pathToken = 0 // for multiple path => mainSearch
                 for (let s = 0; s < sortingPathArray.length; s++) {
@@ -66,7 +65,6 @@ export const fastCheck = ( sortingPathArray, sortingValues) => {
                         }
                     }
                 }
-                console.log(pathToken, sortingPathArray.length)
                 if (pathToken === 0) {
                     bufferedRecipe[0].splice(i, 1)
                     i -= 1////////////////////// se recaler dans la liste !!!!!!

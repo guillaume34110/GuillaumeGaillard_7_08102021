@@ -1,4 +1,6 @@
 import { bufferedRecipe } from "./drawArticle.js"
+import { appareilSearch, ingredientsSearch, search, ustensilesSearch } from "./search.js"
+import { splitClean } from "./splitClean.js"
 
 export const dropDownEventListeners = () => {
     document.querySelectorAll(".btn").forEach((e) => e.addEventListener("click", openDropdown))
@@ -63,58 +65,130 @@ const toggleDropDown = () => {
         icon.style.transform = "rotate(180deg)"
     }
 }
-export const fillList = () => {
+const tagRecover = (mainArray) => {//recuperation de tous les tags
+    
+    const tagsArray = []
+    mainArray.forEach(recipe => {
+        if (key === "ingredients") {
+            recipe[key].forEach(ingredient => {
+                if (!tagsArray.includes(ingredient.ingredient)) tagsArray.push(ingredient.ingredient)
+            })
+        } else if (key === "appliance") {
+            if (!tagsArray.includes(recipe[key])) tagsArray.push(recipe[key])
+        } else if (key === "ustensils") {
+            recipe[key].forEach(ustensil => {
+                if (!tagsArray.includes(ustensil)) tagsArray.push(ustensil)
+            })
+        }
+    })
+    return tagsArray
+}
+const createDropDownNewElements = (tagsArray ,limit) => {
+    for (let i = 0; i < limit; i++) {
+        if (tagsArray[i]) {
+            const newLi = document.createElement("li")
+            newLi.classList.add(`li-${key}`)
+            newLi.classList.add(`li-tag`)
+            const newHtml = `${tagsArray[i]}`
+            newLi.innerHTML = newHtml
+            list.appendChild(newLi)
+            newLi.addEventListener("click", createTags)
+            if (i === limit - 1) {
+                list.classList.remove("dropdown-20")
+                btn.classList.remove("dropdown-20")
+                list.classList.remove("dropdown-10")
+                btn.classList.remove("dropdown-10")
+            }
+        } else if (btn.classList.contains("btn-active")) {
+
+            if (i < 20 && i > 10) {
+                dropdownForm.classList.add("dropdown-form-20")
+                list.classList.add("dropdown-20")
+                btn.classList.add("dropdown-20")
+                list.classList.remove("dropdown-10")
+                btn.classList.remove("dropdown-10")
+            } else if (i < 10) {
+                dropdownForm.classList.add("dropdown-form-10")
+                list.classList.add("dropdown-10")
+                btn.classList.add("dropdown-10")
+                list.classList.remove("dropdown-20")
+                btn.classList.remove("dropdown-20")
+            } else if (i > 20) {
+                list.classList.remove("dropdown-20")
+                btn.classList.remove("dropdown-20")
+                list.classList.remove("dropdown-10")
+                btn.classList.remove("dropdown-10")
+            }
+            i = limit
+        }
+
+    }
+}
+export const fillList = () => { // inscrit les tags dans les differentes listes
 
     if (list) {
         const limit = 30
-        const tagsArray = []
         list.replaceChildren()
-        console.log(bufferedRecipe[0])
-        bufferedRecipe[0].forEach(recipe => {
+        const tagsArray = tagRecover(bufferedRecipe[0])
+        createDropDownNewElements(tagsArray,limit)
+    }
+}
 
-            if (key === "ingredients") {
-                recipe[key].forEach(ingredient => {
-                    console.log(ingredient)
-                    if (!tagsArray.includes(ingredient.ingredient)) tagsArray.push(ingredient.ingredient)
-                })
-            } else if (key === "appliance") {
-                if (!tagsArray.includes(recipe[key])) tagsArray.push(recipe[key])
-            } else if (key === "ustensils") {
-                recipe[key].forEach(ustensil => {
-                    if (!tagsArray.includes(ustensil)) tagsArray.push(ustensil)
-                })
-            }
-        })
 
-        for (let i = 0; i < limit; i++) {
-            if (tagsArray[i]) {
-                const newLi = document.createElement("li")
-                const newHtml = `${tagsArray[i]}`
-                newLi.innerHTML = newHtml
-                list.appendChild(newLi)
-            } else if (btn.classList.contains("btn-active")) {
+const createTags = (e) => {
+    const tagsList = document.querySelector(".tags")
+    const tagLi = e.target
+    const newTag = document.createElement("li")
+    const newHtml = `${tagLi.innerText} <i id = "${tagLi.innerText}" class="far fa-times-circle"></i>`
+    if (tagLi.classList.contains("li-ingredients")) newTag.classList.add(`tag-ingredient`)
+    else if (tagLi.classList.contains("li-appliance")) newTag.classList.add(`tag-appliance`)
+    else if (tagLi.classList.contains("li-ustensils")) newTag.classList.add(`tag-ustensils`)
+    newTag.innerHTML = newHtml
+    tagsList.appendChild(newTag)
+    newTag.addEventListener("click", removeTag)
+    const newSearchTag = tagLi.innerText.split(" ")
+    splitClean(newSearchTag)
+    newSearchTag.forEach(nT => {
+        if (tagLi.classList.contains("li-ingredients")) addNewTag(ingredientsSearch[0] ,nT)  
+        else if (tagLi.classList.contains("li-appliance")) addNewTag(appareilSearch[0] ,nT)
+        else if (tagLi.classList.contains("li-ustensils")) addNewTag(ustensilesSearch[0] ,nT)
+    })
 
-                if (i < 20 && i > 10) {
-                    console.log(i)
-                    dropdownForm.classList.add("dropdown-form-20")
-                    list.classList.add("dropdown-20")
-                    btn.classList.add("dropdown-20")
-                    list.classList.remove("dropdown-10")
-                    btn.classList.remove("dropdown-10")
-                } else if (i < 10) {
-                    dropdownForm.classList.add("dropdown-form-10")
-                    list.classList.add("dropdown-10")
-                    btn.classList.add("dropdown-10")
-                    list.classList.remove("dropdown-20")
-                    btn.classList.remove("dropdown-20")
-                } else {
-                    list.classList.remove("dropdown-20")
-                    btn.classList.remove("dropdown-20")
-                    list.classList.remove("dropdown-10")
-                    btn.classList.remove("dropdown-10")
-                }
-                i = limit
+    search()
+}
+
+const addNewTag = (tagsArray , newTag) => {
+     let tagToken = 0
+    tagsArray.forEach((currentTag) => {
+        if (currentTag === newTag)
+            tagToken++
+    })
+    if (tagToken === 0) tagsArray.push(newTag)
+}
+
+const removeTag = (e) => {
+    console.log(e)
+    const tagLi = e.target
+    const tag = e.target.parentNode
+    let arrayToSearch
+    if (tag.classList.contains("tag-ingredient")) arrayToSearch = ingredientsSearch[0] 
+    else if (tag.classList.contains("tag-appliance")) arrayToSearch = appareilSearch[0]
+    else if (tag.classList.contains("tag-ustensils")) arrayToSearch = ustensilesSearch[0]
+    const oldSearchTag = tagLi.id.split(" ")
+    splitClean(oldSearchTag)
+    removeOldTags(oldSearchTag,arrayToSearch)
+    tag.remove();
+    search()
+}
+
+const removeOldTags = (removingTagsArray,arrayToSearch) => {
+    removingTagsArray.forEach(oldTag => {
+        for (let i = 0; i < arrayToSearch.length; i++) {
+            if (oldTag.includes(arrayToSearch[i]) || arrayToSearch[i].includes(oldTag)) {
+                arrayToSearch.splice(i, 1)
+                i -= 1
             }
         }
-    }
+    })
+    console.log(arrayToSearch , removingTagsArray);
 }
