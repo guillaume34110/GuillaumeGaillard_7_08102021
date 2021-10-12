@@ -1,4 +1,4 @@
-import { bufferedRecipe } from "./drawArticle.js"
+import { bufferedRecipe, drawArticle } from "./drawArticle.js"
 
 export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
 
@@ -13,18 +13,23 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                                 bufferedRecipe[0].forEach(recipe => {
                                     if (recipe === recipeArray[i]) bufferToken = true
                                 })
-                                if (!bufferToken) bufferedRecipe[0].push(recipeArray[i])
+                                if (!bufferToken){
+                                    bufferedRecipe[0].push(recipeArray[i])
+                                    drawArticle()
+                                } 
                             }
                         }
                     } else if (sortingPathArray[s] === "ustensils") {
-                        
                         for (let a = 0; a < recipeArray[i].ustensils.length; a++) {
                             if (recipeArray[i].ustensils[a].toLowerCase().includes(sortingValues[h].toLowerCase())) {
                                 let bufferToken = false
                                 bufferedRecipe[0].forEach(recipe => {
                                     if (recipe === recipeArray[i]) bufferToken = true
                                 })
-                                if (!bufferToken) bufferedRecipe[0].push(recipeArray[i])
+                                if (!bufferToken){
+                                    bufferedRecipe[0].push(recipeArray[i])
+                                    drawArticle()
+                                } 
                             }
                         }
                     } else {
@@ -33,7 +38,10 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                             bufferedRecipe[0].forEach(recipe => {
                                 if (recipe === recipeArray[i]) bufferToken = true
                             })
-                            if (!bufferToken) bufferedRecipe[0].push(recipeArray[i])
+                            if (!bufferToken) {
+                                bufferedRecipe[0].push(recipeArray[i])
+                                drawArticle()
+                            }
                         }
                     }
                 }
@@ -68,6 +76,7 @@ export const fastCheck = ( sortingPathArray, sortingValues) => {
                 if (pathToken === 0) {
                     bufferedRecipe[0].splice(i, 1)
                     i -= 1////////////////////// se recaler dans la liste !!!!!!
+                    drawArticle()
                 }
             }
         }

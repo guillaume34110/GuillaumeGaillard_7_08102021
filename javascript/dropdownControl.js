@@ -1,5 +1,5 @@
 import { bufferedRecipe } from "./drawArticle.js"
-import { appareilSearch, ingredientsSearch, search, ustensilesSearch } from "./search.js"
+import { appareilSearch, ingredientsSearch, search, tagSearch, ustensilesSearch } from "./search.js"
 import { splitClean } from "./splitClean.js"
 
 export const dropDownEventListeners = () => {
@@ -83,6 +83,19 @@ const tagRecover = (mainArray) => {//recuperation de tous les tags
     })
     return tagsArray
 }
+
+const tagSearchSorting = (tagsArray) => { /// recherche dans tous les tags en fonction de l'input
+   tagSearch[0].forEach(tag =>{
+        for (let i = 0 ; i <  tagsArray.length ; i++){
+            if (!tagsArray[i].toLowerCase().includes(tag.toLowerCase())) {
+                tagsArray.splice(i,1)
+                i-=1
+            }
+        }
+    })
+    return tagsArray
+}
+
 const createDropDownNewElements = (tagsArray ,limit) => {
     for (let i = 0; i < limit; i++) {
         if (tagsArray[i]) {
@@ -129,20 +142,36 @@ export const fillList = () => { // inscrit les tags dans les differentes listes
     if (list) {
         const limit = 30
         list.replaceChildren()
-        const tagsArray = tagRecover(bufferedRecipe[0])
+        let tagsArray = tagRecover(bufferedRecipe[0])
+        tagsArray = tagSearchSorting(tagsArray)
         createDropDownNewElements(tagsArray,limit)
     }
 }
 
+const cleanInput = (className) => {
+const input = document.querySelector(`.${className}`)
+input.value = ""
+tagSearch[0]=[]
+}
 
 const createTags = (e) => {
+    
     const tagsList = document.querySelector(".tags")
     const tagLi = e.target
     const newTag = document.createElement("li")
     const newHtml = `${tagLi.innerText} <i id = "${tagLi.innerText}" class="far fa-times-circle"></i>`
-    if (tagLi.classList.contains("li-ingredients")) newTag.classList.add(`tag-ingredient`)
-    else if (tagLi.classList.contains("li-appliance")) newTag.classList.add(`tag-appliance`)
-    else if (tagLi.classList.contains("li-ustensils")) newTag.classList.add(`tag-ustensils`)
+    if (tagLi.classList.contains("li-ingredients")) {
+        newTag.classList.add(`tag-ingredient`)
+        cleanInput('input-ingredients')
+    }
+    else if (tagLi.classList.contains("li-appliance")){
+        newTag.classList.add(`tag-appliance`)
+        cleanInput('input-appareil')
+    } 
+    else if (tagLi.classList.contains("li-ustensils")){
+        newTag.classList.add(`tag-ustensils`)
+        cleanInput('input-ustensiles')
+    } 
     newTag.innerHTML = newHtml
     tagsList.appendChild(newTag)
     newTag.addEventListener("click", removeTag)
@@ -184,7 +213,7 @@ const removeTag = (e) => {
 const removeOldTags = (removingTagsArray,arrayToSearch) => {
     removingTagsArray.forEach(oldTag => {
         for (let i = 0; i < arrayToSearch.length; i++) {
-            if (oldTag.includes(arrayToSearch[i]) || arrayToSearch[i].includes(oldTag)) {
+            if (oldTag.toLowerCase().includes(arrayToSearch[i].toLowerCase()) || arrayToSearch[i].toLowerCase().includes(oldTag.toLowerCase())) {
                 arrayToSearch.splice(i, 1)
                 i -= 1
             }
