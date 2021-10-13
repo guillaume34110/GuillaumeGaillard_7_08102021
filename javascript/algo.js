@@ -103,7 +103,7 @@ export const slowAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                                 })
                                 if (!bufferToken) {
                                     bufferedRecipe[0].push(i)
-                                    let sortingPath = [sortingPathArray[s]]
+                                    let sortingPath = [s]
                                     slowCheck(sortingPath,sortingValues)
                                     drawArticle()
                                 }
@@ -118,7 +118,7 @@ export const slowAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                                 })
                                 if (!bufferToken) {
                                     bufferedRecipe[0].push(i)
-                                    let sortingPath = [sortingPathArray[s]]
+                                    let sortingPath = [s]
                                 slowCheck(sortingPath,sortingValues)
                                 drawArticle()
                                 }
@@ -132,7 +132,7 @@ export const slowAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                             })
                             if (!bufferToken) {
                                 bufferedRecipe[0].push(i)
-                                let sortingPath = [sortingPathArray[s]]
+                                let sortingPath = [s]
                                 slowCheck(sortingPath,sortingValues)
                                 drawArticle()
                             }
@@ -149,20 +149,20 @@ export const slowCheck = (sortingPathArray, sortingValues) => {
            bufferedRecipe[0].forEach(i => {
                 let pathToken = 0 // for multiple path => mainSearch
                 sortingPathArray.forEach(s => {
-                    if (sortingPathArray[s] === "ingredients") {
-                        for (let a = 0; a < bufferedRecipe[0][i].ingredients.length; a++) {
-                            if (bufferedRecipe[0][i].ingredients[a].ingredient.toLowerCase().includes(h.toLowerCase())) {
+                    if (s === "ingredients") {
+                        i.ingredients.forEach(a => {
+                            if (a.ingredient.toLowerCase().includes(h.toLowerCase())) {
                                 pathToken++;
                             }
-                        }
-                    } else if (sortingPathArray[s] === "ustensils") {
-                        for (let a = 0; a < bufferedRecipe[0][i].ustensils.length; a++) {
-                            if (bufferedRecipe[0][i].ustensils[a].toLowerCase().includes(h.toLowerCase())) {
+                        })
+                    } else if (s === "ustensils") {
+                         i.ustensils.forEach(a => {
+                            if (a.toLowerCase().includes(h.toLowerCase())) {
                                 pathToken++;
                             }
-                        }
+                        })
                     } else {
-                        if (bufferedRecipe[0][i][sortingPathArray[s]].toLowerCase().includes(h.toLowerCase())) {
+                        if (i[s].toLowerCase().includes(h.toLowerCase())) {
                             pathToken++;
                         }
                     }
