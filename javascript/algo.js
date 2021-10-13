@@ -146,23 +146,23 @@ export const slowAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
 export const slowCheck = (sortingPathArray, sortingValues) => {
     sortingValues.forEach(h => {
         if (h.length > 0) {
-           bufferedRecipe[0].forEach(i => {
+            for (let i = 0; i < bufferedRecipe[0].length; i++) {
                 let pathToken = 0 // for multiple path => mainSearch
                 sortingPathArray.forEach(s => {
                     if (s === "ingredients") {
-                        i.ingredients.forEach(a => {
+                        bufferedRecipe[0][i].ingredients.forEach(a => {
                             if (a.ingredient.toLowerCase().includes(h.toLowerCase())) {
                                 pathToken++;
                             }
                         })
                     } else if (s === "ustensils") {
-                         i.ustensils.forEach(a => {
+                        bufferedRecipe[0][i].ustensils.forEach(a => {
                             if (a.toLowerCase().includes(h.toLowerCase())) {
                                 pathToken++;
                             }
                         })
                     } else {
-                        if (i[s].toLowerCase().includes(h.toLowerCase())) {
+                        if (bufferedRecipe[0][i][s].toLowerCase().includes(h.toLowerCase())) {
                             pathToken++;
                         }
                     }
@@ -172,7 +172,7 @@ export const slowCheck = (sortingPathArray, sortingValues) => {
                     i -= 1////////////////////// se recaler dans la liste !!!!!!
                     drawArticle()
                 }
-            })
+            }
         }
     })
 }
