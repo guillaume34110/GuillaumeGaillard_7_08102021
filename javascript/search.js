@@ -1,5 +1,5 @@
 import { recipes } from "../data/recipes.js"
-import {  fastCheck, fastAlgorytm } from "./algo.js"
+import { fastCheck, fastAlgorytm } from "./algo.js"
 import { bufferedRecipe, drawArticle } from "./drawArticle.js"
 import { fillList } from "./dropdownControl.js"
 import { splitClean } from "./splitClean.js"
@@ -7,8 +7,8 @@ import { splitClean } from "./splitClean.js"
 export const SearchEventListener = () => {
     const textInputs = document.querySelectorAll(".form-control")
     textInputs.forEach((textInput) => {
-        if (textInput.classList.contains("main-search"))textInput.addEventListener('keyup', search)
-        if (!textInput.classList.contains("main-search"))textInput.addEventListener('keyup', createTagSearch)
+        if (textInput.classList.contains("main-search")) textInput.addEventListener('keyup', search)
+        if (!textInput.classList.contains("main-search")) textInput.addEventListener('keyup', createTagSearch)
     })
 
 }
@@ -28,29 +28,34 @@ export const search = () => {
         sortingToken = true
         let sortingPath = ["name", "description", "ingredients"]
         fastAlgorytm(recipes, sortingPath, sortingValues)
-        fastCheck(sortingPath, sortingValues)
+        //fastCheck(sortingPath, sortingValues)
     }
     sortingValues = ingredientsSearch[0]
     if (sortingValues[0]?.length > 2) {
         let sortingPath = ["ingredients"]
-        if (sortingToken === false) fastAlgorytm(recipes, sortingPath, sortingValues)
-        sortingToken = true
-        fastCheck(sortingPath, sortingValues)
+        if (sortingToken === false) {
+            fastAlgorytm(recipes, sortingPath, sortingValues)
+            sortingToken = true
+        } else fastCheck(sortingPath, sortingValues)
+
     }
     sortingValues = ustensilesSearch[0]
 
-    if (sortingValues[0]?.length > 2 ) {
+    if (sortingValues[0]?.length > 2) {
         let sortingPath = ["ustensils"]
-        if (sortingToken === false) fastAlgorytm(recipes, sortingPath, sortingValues)
-        sortingToken = true
-        fastCheck(sortingPath, sortingValues)
+        if (sortingToken === false) {
+            fastAlgorytm(recipes, sortingPath, sortingValues)
+            sortingToken = true
+        } else fastCheck(sortingPath, sortingValues)
+
     }
     sortingValues = appareilSearch[0]
-    if (sortingValues[0]?.length > 2 ) {
+    if (sortingValues[0]?.length > 2) {
         let sortingPath = ["appliance"]
-        if (sortingToken === false) fastAlgorytm(recipes, sortingPath, sortingValues)
-        sortingToken = true
-        fastCheck(sortingPath, sortingValues)
+        if (sortingToken === false) {
+            fastAlgorytm(recipes, sortingPath, sortingValues)
+            sortingToken = true
+        } else fastCheck(sortingPath, sortingValues)
     }
     if (sortingToken === false) {
         bufferedRecipe[0] = recipes
@@ -59,12 +64,12 @@ export const search = () => {
     fillList()
 }
 const getMainInput = () => {
-    const textInput = document.querySelector(".main-search")    
+    const textInput = document.querySelector(".main-search")
     mainSearch[0] = textInput.value.split(" ")
     splitClean(mainSearch[0])
 }
 const createTagSearch = (e) => {
-    console.log(e, );
+    console.log(e,);
     tagSearch[0] = e.target.value.split(" ")
     splitClean(tagSearch[0])
     fillList()

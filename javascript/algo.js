@@ -15,6 +15,8 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                                 }
                                 if (!bufferToken) {
                                     bufferedRecipe[0].push(recipeArray[i])
+                                    let sortingPath = [sortingPathArray[s]]
+                                    fastCheck(sortingPath,sortingValues)
                                     drawArticle()
                                 }
                             }
@@ -28,6 +30,8 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                                 }
                                 if (!bufferToken) {
                                     bufferedRecipe[0].push(recipeArray[i])
+                                    let sortingPath = [sortingPathArray[s]]
+                                    fastCheck(sortingPath,sortingValues)
                                     drawArticle()
                                 }
                             }
@@ -40,6 +44,8 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                             })
                             if (!bufferToken) {
                                 bufferedRecipe[0].push(recipeArray[i])
+                                let sortingPath = [sortingPathArray[s]]
+                                fastCheck(sortingPath,sortingValues)
                                 drawArticle()
                             }
                         }
@@ -97,6 +103,8 @@ export const slowAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                                 })
                                 if (!bufferToken) {
                                     bufferedRecipe[0].push(i)
+                                    let sortingPath = [sortingPathArray[s]]
+                                    slowCheck(sortingPath,sortingValues)
                                     drawArticle()
                                 }
                             }
@@ -110,7 +118,9 @@ export const slowAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                                 })
                                 if (!bufferToken) {
                                     bufferedRecipe[0].push(i)
-                                    drawArticle()
+                                    let sortingPath = [sortingPathArray[s]]
+                                slowCheck(sortingPath,sortingValues)
+                                drawArticle()
                                 }
                             }
                         })
@@ -122,6 +132,8 @@ export const slowAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                             })
                             if (!bufferToken) {
                                 bufferedRecipe[0].push(i)
+                                let sortingPath = [sortingPathArray[s]]
+                                slowCheck(sortingPath,sortingValues)
                                 drawArticle()
                             }
                         }
@@ -129,5 +141,38 @@ export const slowAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
                 })
             }
         })
+    })
+}
+export const slowCheck = (sortingPathArray, sortingValues) => {
+    sortingValues.forEach(h => {
+        if (h.length > 0) {
+           bufferedRecipe[0].forEach(i => {
+                let pathToken = 0 // for multiple path => mainSearch
+                sortingPathArray.forEach(s => {
+                    if (sortingPathArray[s] === "ingredients") {
+                        for (let a = 0; a < bufferedRecipe[0][i].ingredients.length; a++) {
+                            if (bufferedRecipe[0][i].ingredients[a].ingredient.toLowerCase().includes(h.toLowerCase())) {
+                                pathToken++;
+                            }
+                        }
+                    } else if (sortingPathArray[s] === "ustensils") {
+                        for (let a = 0; a < bufferedRecipe[0][i].ustensils.length; a++) {
+                            if (bufferedRecipe[0][i].ustensils[a].toLowerCase().includes(h.toLowerCase())) {
+                                pathToken++;
+                            }
+                        }
+                    } else {
+                        if (bufferedRecipe[0][i][sortingPathArray[s]].toLowerCase().includes(h.toLowerCase())) {
+                            pathToken++;
+                        }
+                    }
+                })
+                if (pathToken === 0) {
+                    bufferedRecipe[0].splice(i, 1)
+                    i -= 1////////////////////// se recaler dans la liste !!!!!!
+                    drawArticle()
+                }
+            })
+        }
     })
 }

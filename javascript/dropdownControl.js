@@ -72,19 +72,23 @@ const toggleDropDown = () => {
 const tagRecover = (mainArray) => {//recuperation de tous les tags
     
     const tagsArray = []
-    mainArray.forEach(recipe => {
+   for (let i=0 ; i<mainArray.length ; i++) {
         if (key === "ingredients") {
-            recipe[key].forEach(ingredient => {
+            mainArray[i][key].forEach(ingredient => {
                 if (!tagsArray.includes(ingredient.ingredient)) tagsArray.push(ingredient.ingredient)
+               
             })
         } else if (key === "appliance") {
-            if (!tagsArray.includes(recipe[key])) tagsArray.push(recipe[key])
+            if (!tagsArray.includes(mainArray[i][key])) tagsArray.push(mainArray[i][key])
         } else if (key === "ustensils") {
-            recipe[key].forEach(ustensil => {
+            mainArray[i][key].forEach(ustensil => {
                 if (!tagsArray.includes(ustensil)) tagsArray.push(ustensil)
             })
         }
-    })
+        if (tagsArray.length > 30) {
+           i=mainArray.length
+        }
+    }
     return tagsArray
 }
 
