@@ -4,6 +4,7 @@ import { bufferedRecipe, drawArticle } from "./drawArticle.js"
 import { fillList } from "./dropdownControl.js"
 import { splitClean } from "./splitClean.js"
 
+/*evnt listener pour la rcherche a chaque nouveau cararctére*/
 export const SearchEventListener = () => {
     const textInputs = document.querySelectorAll(".form-control")
     textInputs.forEach((textInput) => {
@@ -18,19 +19,18 @@ export let ingredientsSearch = [[]]
 export let appareilSearch = [[]]
 export let ustensilesSearch = [[]]
 export let tagSearch = [[]]
-
+/*recherches*/
 export const search = () => {
-    bufferedRecipe[0] = []
-    getMainInput()
-    let sortingToken = false
+    bufferedRecipe[0] = [] // remise a zero des recettes 
+    getMainInput()// recupere les mots clefs de l'input principal
+    let sortingToken = false // aucun tri n'a été effectuer
     let sortingValues = mainSearch[0]
     if (sortingValues[0]?.length > 2) {
-        sortingToken = true
-        let sortingPath = ["name", "description", "ingredients"]
+        sortingToken = true//une recherche a été effectué
+        let sortingPath = ["name", "description", "ingredients"]// les chemins a recherchées
         fastAlgorytm(recipes, sortingPath, sortingValues)
-        //fastCheck(sortingPath, sortingValues)
     }
-    sortingValues = ingredientsSearch[0]
+    sortingValues = ingredientsSearch[0]// nouvelle valeurs de tri
     if (sortingValues[0]?.length > 2) {
         let sortingPath = ["ingredients"]
         if (sortingToken === false) {
@@ -60,17 +60,19 @@ export const search = () => {
     if (sortingToken === false) {
         bufferedRecipe[0] = recipes
     }
-    drawArticle()
-    fillList()
+    drawArticle()//on re-affiche les recettes
+    fillList()// inscrit les tags dans les differentes listes
 }
+/*recupere les mots clefs du champ texte principal et les mets dans mainSearch*/
 const getMainInput = () => {
     const textInput = document.querySelector(".main-search")
     mainSearch[0] = textInput.value.split(" ")
     splitClean(mainSearch[0])
 }
+/*recherche secondaire pour les tags*/
 const createTagSearch = (e) => {
     console.log(e,);
     tagSearch[0] = e.target.value.split(" ")
     splitClean(tagSearch[0])
-    fillList()
+    fillList()// inscrit les tags dans les differentes listes
 }

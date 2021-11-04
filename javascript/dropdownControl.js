@@ -2,6 +2,7 @@ import { bufferedRecipe } from "./drawArticle.js"
 import { appareilSearch, ingredientsSearch, search, tagSearch, ustensilesSearch } from "./search.js"
 import { splitClean } from "./splitClean.js"
 
+/*eventlistener pour le dropdown*/
 export const dropDownEventListeners = () => {
     document.querySelectorAll(".btn").forEach((e) => e.addEventListener("click", openDropdown))
 }
@@ -10,19 +11,20 @@ let btn
 let icon
 let list
 let key
-
+/*ouvre le dropdown*/
 const openDropdown = (e) => {
     const target = e.target
-    onlyOneDropdown(target)
-    dropdownSelection(target)
-    toggleDropDown()
-    fillList()
+    onlyOneDropdown(target)//un seul driodown ouvert
+    dropdownSelection(target)//ciblage du dropdown
+    toggleDropDown()//changement d'état
+    fillList()//rempli des nouveaux élements
 }
+/*ferme automatiquement un autre dropdown ouvert*/
 const onlyOneDropdown = (target) => {
     const activeDropdown = document.querySelector(".dropdown-form-active")
     if (activeDropdown && !activeDropdown.classList.contains(`input-${target.classList[3]}`) ) toggleDropDown()
 }
-
+/*selection du menu a afficher*/
 const dropdownSelection = (target) => {
     if (target.classList.contains("ingredients")) {
         dropdownForm = document.querySelector(".input-ingredients")
@@ -47,6 +49,7 @@ const dropdownSelection = (target) => {
     }
 
 }
+/*vient changer d'état le menu selectioné*/
 const toggleDropDown = () => {
 
     if (dropdownForm.classList.contains("dropdown-form-active")) {
@@ -69,10 +72,10 @@ const toggleDropDown = () => {
         icon.style.transform = "rotate(180deg)"
     }
 }
-const tagRecover = (mainArray) => {//recuperation de tous les tags
+const tagRecover = (mainArray) => {//recuperation de tous les tags avec une limite 30
     
     const tagsArray = []
-   for (let i=0 ; i<mainArray.length ; i++) {
+   for (let i=0 ; i<mainArray.length ; i++) {//récuperation dans la liste voulue
         if (key === "ingredients") {
             mainArray[i][key].forEach(ingredient => {
                 if (!tagsArray.includes(ingredient.ingredient)) tagsArray.push(ingredient.ingredient)
@@ -103,7 +106,7 @@ const tagSearchSorting = (tagsArray) => { /// recherche dans tous les tags en fo
     })
     return tagsArray
 }
-
+/*creation du dropdown selectionné en fonction du nombre de tags*/
 const createDropDownNewElements = (tagsArray ,limit) => {
     for (let i = 0; i < limit; i++) {
         if (tagsArray[i]) {
@@ -152,16 +155,16 @@ export const fillList = () => { // inscrit les tags dans les differentes listes
         list.replaceChildren()
         let tagsArray = tagRecover(bufferedRecipe[0])
         tagsArray = tagSearchSorting(tagsArray)
-        createDropDownNewElements(tagsArray,limit)
+        createDropDownNewElements(tagsArray,limit)//creation du dropdown en fonction du nombre d'elements
     }
 }
-
+/*nettoyage du champ texte des inputs*/
 const cleanInput = (className) => {
 const input = document.querySelector(`.${className}`)
 input.value = ""
 tagSearch[0]=[]
 }
-
+/*creation des tags*/
 const createTags = (e) => {
     
     const tagsList = document.querySelector(".tags")
@@ -170,30 +173,30 @@ const createTags = (e) => {
     const newHtml = `${tagLi.innerText} <i id = "${tagLi.innerText}" class="far fa-times-circle"></i>`
     if (tagLi.classList.contains("li-ingredients")) {
         newTag.classList.add(`tag-ingredient`)
-        cleanInput('input-ingredients')
+        cleanInput('input-ingredients')//nettoyage du champ
     }
     else if (tagLi.classList.contains("li-appliance")){
         newTag.classList.add(`tag-appliance`)
-        cleanInput('input-appareil')
+        cleanInput('input-appareil')//nettoyage du champ
     } 
     else if (tagLi.classList.contains("li-ustensils")){
         newTag.classList.add(`tag-ustensils`)
-        cleanInput('input-ustensiles')
+        cleanInput('input-ustensiles')//nettoyage du champ
     } 
     newTag.innerHTML = newHtml
     tagsList.appendChild(newTag)
-    newTag.addEventListener("click", removeTag)
-    const newSearchTag = tagLi.innerText.split(" ")
-    splitClean(newSearchTag)
+    newTag.addEventListener("click", removeTag)//event listener pour la fermeture
+    const newSearchTag = tagLi.innerText.split(" ")//separation des mos clefs
+    splitClean(newSearchTag)//nettoyage aprés le split
     newSearchTag.forEach(nT => {
         if (tagLi.classList.contains("li-ingredients")) addNewTag(ingredientsSearch[0] ,nT)  
         else if (tagLi.classList.contains("li-appliance")) addNewTag(appareilSearch[0] ,nT)
         else if (tagLi.classList.contains("li-ustensils")) addNewTag(ustensilesSearch[0] ,nT)
     })
 
-    search()
+    search() // lancement d'une recherche avec les nouveaux paramétres
 }
-
+/*ajout du nouveau tag*/
 const addNewTag = (tagsArray , newTag) => {
      let tagToken = 0
     tagsArray.forEach((currentTag) => {
@@ -202,22 +205,22 @@ const addNewTag = (tagsArray , newTag) => {
     })
     if (tagToken === 0) tagsArray.push(newTag)
 }
-
+/*retrait des tags au click sur la croix*/
 const removeTag = (e) => {
-    console.log(e)
+    if (e.target.id !== ""){
     const tagLi = e.target
     const tag = e.target.parentNode
     let arrayToSearch
-    if (tag.classList.contains("tag-ingredient")) arrayToSearch = ingredientsSearch[0] 
+    if (tag.classList.contains("tag-ingredient")) arrayToSearch = ingredientsSearch[0] // selection du bon array
     else if (tag.classList.contains("tag-appliance")) arrayToSearch = appareilSearch[0]
     else if (tag.classList.contains("tag-ustensils")) arrayToSearch = ustensilesSearch[0]
-    const oldSearchTag = tagLi.id.split(" ")
-    splitClean(oldSearchTag)
+    const oldSearchTag = tagLi.id.split(" ")//separation des mots clefs
+    splitClean(oldSearchTag) // netoie le array aprés la separation des mots clefs
     removeOldTags(oldSearchTag,arrayToSearch)
-    tag.remove();
-    search()
-}
-
+    tag.remove();// retire l'element
+    search()//lance une nouvelle recherche avec le tag en moins
+}}
+/*retrait du tag de l'array correspondant*/
 const removeOldTags = (removingTagsArray,arrayToSearch) => {
     removingTagsArray.forEach(oldTag => {
         for (let i = 0; i < arrayToSearch.length; i++) {
@@ -227,5 +230,4 @@ const removeOldTags = (removingTagsArray,arrayToSearch) => {
             }
         }
     })
-    console.log(arrayToSearch , removingTagsArray);
 }

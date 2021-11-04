@@ -1,14 +1,14 @@
 
 
-export let bufferedRecipe = []
+export let bufferedRecipe = [] // les recettes à affichées
 
-
+/*affichage de la recette */
 export const drawArticle = () => {
 const main = document.querySelector('main')
 main.replaceChildren()
-bufferedRecipe[0].forEach( (recipe) => {
+bufferedRecipe[0].forEach( (recipe) => {// pour chaque recette du buffer
     const newArcticle = document.createElement('article')
-    recipe.ingredients.map(e => {
+    recipe.ingredients.map(e => {// pour que les unités correspondent a la maquette
         if (e.unit === "grammes" )e.unit = "g"
         else if(e.unit === "cuillères à soupe") e.unit="cuillères"
     })
@@ -32,7 +32,7 @@ bufferedRecipe[0].forEach( (recipe) => {
 </div>
     `
     newArcticle.innerHTML = newHtml
-    main.appendChild(newArcticle)
+    main.appendChild(newArcticle)// ajout de la nouvelle recette au main
 })
 
     

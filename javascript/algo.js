@@ -1,23 +1,23 @@
 import { bufferedRecipe, drawArticle } from "./drawArticle.js"
 
-export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
+export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => { //algorythme avec des boucles for
 
-    for (let s = 0; s < sortingPathArray.length; s++) {
-        for (let h = 0; h < sortingValues.length; h++) {
-            if (sortingValues[h].length > 0) {
-                for (let i = 0; i < recipeArray.length; i++) {
+    for (let s = 0; s < sortingPathArray.length; s++) {//pour tous les chemins , ingredients, ustenciles ,...
+        for (let h = 0; h < sortingValues.length; h++) {//pour toutes les valeurs de l'input
+            if (sortingValues[h].length > 0) {// si il y a une valeur a tester
+                for (let i = 0; i < recipeArray.length; i++) {//pour toutes les recettes
                     if (sortingPathArray[s] === "ingredients") {
-                        for (let a = 0; a < recipeArray[i].ingredients.length; a++) {
-                            if (recipeArray[i].ingredients[a].ingredient.toLowerCase().includes(sortingValues[h].toLowerCase())) {
-                                let bufferToken = false
-                                for (let r =0 ; r<bufferedRecipe[0].length; r++) {
-                                    if (bufferedRecipe[0][r] === recipeArray[i]) bufferToken = true
+                        for (let a = 0; a < recipeArray[i].ingredients.length; a++) {//pour tous les ingredients
+                            if (recipeArray[i].ingredients[a].ingredient.toLowerCase().includes(sortingValues[h].toLowerCase())) {//si l'ingredient est dans la recette
+                                let bufferToken = false // ticket pour savoir si la recette a deja été touveé
+                                for (let r =0 ; r<bufferedRecipe[0].length; r++) {//pour toutes les recette affichés
+                                    if (bufferedRecipe[0][r] === recipeArray[i]) bufferToken = true //la recette est deja présente
                                 }
-                                if (!bufferToken) {
-                                    bufferedRecipe[0].push(recipeArray[i])
-                                    let sortingPath = [sortingPathArray[s]]
-                                    fastCheck(sortingPath,sortingValues)
-                                    drawArticle()
+                                if (!bufferToken) {// si la recette n'est pas présente
+                                    bufferedRecipe[0].push(recipeArray[i])//alors elle est ajouté a l'array bufferedRecipe 
+                                    let sortingPath = [sortingPathArray[s]]//on recupére le chemin
+                                    fastCheck(sortingPath,sortingValues)//on confirme que les autres valeurs de tri sont présetes dans l'objet
+                                    drawArticle()// l'element est affiché
                                 }
                             }
                         }
@@ -55,12 +55,12 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
         }
     }
 }
-export const fastCheck = (sortingPathArray, sortingValues) => {
-    for (let h = 0; h < sortingValues.length; h++) {
-        if (sortingValues[h].length > 0) {
-            for (let i = 0; i < bufferedRecipe[0].length; i++) {
-                let pathToken = 0 // for multiple path => mainSearch
-                for (let s = 0; s < sortingPathArray.length; s++) {
+export const fastCheck = (sortingPathArray, sortingValues) => {//algorythme de confirmation (autres champs de l'input) avec des boucles for
+    for (let h = 0; h < sortingValues.length; h++) {//pour toutes les valeurs de l'input
+        if (sortingValues[h].length > 0) {// si il y a une valeur a tester
+            for (let i = 0; i < bufferedRecipe[0].length; i++) {//pour toutes les recettes du buffer
+                let pathToken = 0 // for multiple path => mainSearch , pour les recherches multiples
+                for (let s = 0; s < sortingPathArray.length; s++) {//pour tous les chemins
                     if (sortingPathArray[s] === "ingredients") {
                         for (let a = 0; a < bufferedRecipe[0][i].ingredients.length; a++) {
                             if (bufferedRecipe[0][i].ingredients[a].ingredient.toLowerCase().includes(sortingValues[h].toLowerCase())) {
@@ -79,16 +79,17 @@ export const fastCheck = (sortingPathArray, sortingValues) => {
                         }
                     }
                 }
-                if (pathToken === 0) {
-                    bufferedRecipe[0].splice(i, 1)
+                if (pathToken === 0) {// si le ticket est a 0 l'element ne contient pas la valeur
+                    bufferedRecipe[0].splice(i, 1)//on retire l'element
                     i -= 1////////////////////// se recaler dans la liste !!!!!!
-                    drawArticle()
+                    drawArticle()//re-affichage des élemnets
                 }
             }
         }
     }
-}
+}  
 
+/*Algorythme identique avec des boucles forEach*/
 export const slowAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
     sortingPathArray.forEach(s => {
         sortingValues.forEach(h => {
