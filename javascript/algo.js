@@ -161,12 +161,14 @@ export const slowCheck = (sortingPathArray, sortingValues,recipeTarget) => {
                             bufferedRecipe[0][i].ingredients.forEach(a => {
                                 if (a.ingredient.toLowerCase().includes(h.toLowerCase())) {
                                     pathToken++;
+                                    throw {}
                                 }
                             })
                         } else if (s === "ustensils") {
                             bufferedRecipe[0][i].ustensils.forEach(a => {
                                 if (a.toLowerCase().includes(h.toLowerCase())) {
                                     pathToken++;
+                                    throw {}
                                 }
                             })
                         } else {
