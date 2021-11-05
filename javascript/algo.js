@@ -1,7 +1,6 @@
 import { bufferedRecipe, drawArticle } from "./drawArticle.js"
 
 export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => { //algorythme de recherche avec des boucles for
-
     for (let s = 0; s < sortingPathArray.length; s++) {//pour tous les chemins , ingredients, ustenciles ,...
         for (let h = 0; h < sortingValues.length; h++) {//pour toutes les valeurs de l'input
             if (sortingValues[h].length > 2) {// si il y a une valeur a tester
@@ -16,7 +15,7 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => { 
                                 if (!bufferToken) {// si la recette n'est pas présente alors elle st testé est affichés
                                     bufferedRecipe[0].push(recipeArray[i])//alors elle est ajouté a l'array bufferedRecipe 
                                     let sortingPath = [sortingPathArray[s]]//on recupére le chemin
-                                    fastCheck(sortingPath, sortingValues,recipeArray[i])//on confirme que les autres valeurs de tri sont présetes dans l'objet
+                                    fastCheck(sortingPath, sortingValues, recipeArray[i])//on confirme que les autres valeurs de tri sont présetes dans l'objet
                                     drawArticle()// l'element est affiché
                                 }
                             }
@@ -31,7 +30,7 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => { 
                                 if (!bufferToken) {
                                     bufferedRecipe[0].push(recipeArray[i])
                                     let sortingPath = [sortingPathArray[s]]
-                                    fastCheck(sortingPath, sortingValues,recipeArray[i])
+                                    fastCheck(sortingPath, sortingValues, recipeArray[i])
                                     drawArticle()
                                 }
                             }
@@ -39,13 +38,13 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => { 
                     } else {
                         if (recipeArray[i][sortingPathArray[s]].toLowerCase().includes(sortingValues[h].toLowerCase())) {
                             let bufferToken = false
-                            bufferedRecipe[0].forEach(recipe => {
-                                if (recipe === recipeArray[i]) bufferToken = true
-                            })
+                            for (let r = 0; r < bufferedRecipe[0].length; r++) {
+                                if (bufferedRecipe[0][r] === recipeArray[i]) bufferToken = true
+                            }
                             if (!bufferToken) {
                                 bufferedRecipe[0].push(recipeArray[i])
                                 let sortingPath = [sortingPathArray[s]]
-                                fastCheck(sortingPath, sortingValues,recipeArray[i])
+                                fastCheck(sortingPath, sortingValues, recipeArray[i])
                                 drawArticle()
                             }
                         }
@@ -146,35 +145,37 @@ export const slowAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
     })
 }
 export const slowCheck = (sortingPathArray, sortingValues) => {
-    sortingValues.forEach(h => {
-        if (h.length > 0) {
-            for (let i = 0; i < bufferedRecipe[0].length; i++) {
-                let pathToken = 0 // for multiple path => mainSearch
-                sortingPathArray.forEach(s => {
-                    if (s === "ingredients") {
-                        bufferedRecipe[0][i].ingredients.forEach(a => {
-                            if (a.ingredient.toLowerCase().includes(h.toLowerCase())) {
+    for (let i = 0; i < bufferedRecipe[0].length; i++) {
+        if (recipeTarget === undefined || recipeTarget === bufferedRecipe[0][i]) {
+            sortingValues.forEach(h => {
+                if (h.length > 0) {
+                    let pathToken = 0 // for multiple path => mainSearch
+                    sortingPathArray.forEach(s => {
+                        if (s === "ingredients") {
+                            bufferedRecipe[0][i].ingredients.forEach(a => {
+                                if (a.ingredient.toLowerCase().includes(h.toLowerCase())) {
+                                    pathToken++;
+                                }
+                            })
+                        } else if (s === "ustensils") {
+                            bufferedRecipe[0][i].ustensils.forEach(a => {
+                                if (a.toLowerCase().includes(h.toLowerCase())) {
+                                    pathToken++;
+                                }
+                            })
+                        } else {
+                            if (bufferedRecipe[0][i][s].toLowerCase().includes(h.toLowerCase())) {
                                 pathToken++;
                             }
-                        })
-                    } else if (s === "ustensils") {
-                        bufferedRecipe[0][i].ustensils.forEach(a => {
-                            if (a.toLowerCase().includes(h.toLowerCase())) {
-                                pathToken++;
-                            }
-                        })
-                    } else {
-                        if (bufferedRecipe[0][i][s].toLowerCase().includes(h.toLowerCase())) {
-                            pathToken++;
                         }
-                    }
-                })
-                if (pathToken === 0) {
-                    bufferedRecipe[0].splice(i, 1)
-                    i -= 1////////////////////// se recaler dans la liste !!!!!!
-                    drawArticle()
+                    })
                 }
+            })
+            if (pathToken < sortingValues.length) {// si le ticket est plus petit que le nombre de valeur
+                bufferedRecipe[0].splice(i, 1)//on retire l'element
+                i -= 1////////////////////// se recaler dans la liste !!!!!!
+                drawArticle()//re-affichage des élemnets
             }
         }
-    })
+    }
 }
