@@ -1,5 +1,5 @@
 import { recipes } from "../data/recipes.js"
-import { fastCheck, fastAlgorytm } from "./algo.js"
+import { slowCheck, slowAlgorytm } from "./algo.js"
 import { bufferedRecipe, drawArticle } from "./drawArticle.js"
 import { fillList } from "./dropdownControl.js"
 import { splitClean } from "./splitClean.js"
@@ -28,15 +28,15 @@ export const search = () => {
     if (sortingValues[0]?.length > 2) {
         sortingToken = true//une recherche a été effectué
         let sortingPath = [ "description","name", "ingredients"]// les chemins a recherchées
-        fastAlgorytm(recipes, sortingPath, sortingValues)
+        slowAlgorytm(recipes, sortingPath, sortingValues)
     }
     sortingValues = ingredientsSearch[0]// nouvelle valeurs de tri
     if (sortingValues[0]?.length > 2) {
         let sortingPath = ["ingredients"]
         if (sortingToken === false) {
-            fastAlgorytm(recipes, sortingPath, sortingValues)
+            slowAlgorytm(recipes, sortingPath, sortingValues)
             sortingToken = true
-        } else fastCheck(sortingPath, sortingValues)
+        } else slowCheck(sortingPath, sortingValues)
 
     }
     sortingValues = ustensilesSearch[0]
@@ -44,18 +44,18 @@ export const search = () => {
     if (sortingValues[0]?.length > 2) {
         let sortingPath = ["ustensils"]
         if (sortingToken === false) {
-            fastAlgorytm(recipes, sortingPath, sortingValues)
+            slowAlgorytm(recipes, sortingPath, sortingValues)
             sortingToken = true
-        } else fastCheck(sortingPath, sortingValues)
+        } else slowCheck(sortingPath, sortingValues)
 
     }
     sortingValues = appareilSearch[0]
     if (sortingValues[0]?.length > 2) {
         let sortingPath = ["appliance"]
         if (sortingToken === false) {
-            fastAlgorytm(recipes, sortingPath, sortingValues)
+            slowAlgorytm(recipes, sortingPath, sortingValues)
             sortingToken = true
-        } else fastCheck(sortingPath, sortingValues)
+        } else slowCheck(sortingPath, sortingValues)
     }
     if (sortingToken === false) {
         bufferedRecipe[0] = recipes
@@ -68,11 +68,11 @@ const getMainInput = () => {
     const textInput = document.querySelector(".main-search")
     mainSearch[0] = textInput.value.split(" ")
     splitClean(mainSearch[0])
-  
+    console.log(mainSearch[0]);
 }
 /*recherche secondaire pour les tags*/
 const createTagSearch = (e) => {
-   
+    console.log(e,);
     tagSearch[0] = e.target.value.split(" ")
     splitClean(tagSearch[0])
     fillList()// inscrit les tags dans les differentes listes
