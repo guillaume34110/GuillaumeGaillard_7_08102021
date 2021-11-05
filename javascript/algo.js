@@ -61,13 +61,13 @@ export const fastCheck = (sortingPathArray, sortingValues, recipeTarget) => {//a
         if (recipeTarget === undefined || recipeTarget === bufferedRecipe[0][i]) {// permet le test de une ou de toutes les recettes
             let pathToken = 0 //ticket pour la verification
             for (let h = 0; h < sortingValues.length; h++) {//pour toutes les valeurs de l'input
-                if (sortingValues[h].length > 0) {// si il y a une valeur a tester
+                if (sortingValues[h].length > 2) {// si il y a une valeur a tester
                     for (let s = 0; s < sortingPathArray.length; s++) {//pour tous les chemins
                         if (sortingPathArray[s] === "ingredients") {
                             for (let a = 0; a < bufferedRecipe[0][i].ingredients.length; a++) {
                                 if (bufferedRecipe[0][i].ingredients[a].ingredient.toLowerCase().includes(sortingValues[h].toLowerCase())) {
                                     pathToken++;
-                                    a =bufferedRecipe[0][i].ingredients.length // arret de la boucle pour eviter les doublons (lait de coco , noix de coco )
+                                    a = bufferedRecipe[0][i].ingredients.length // arret de la boucle pour eviter les doublons (lait de coco , noix de coco )
                                 }
                             }
                         } else if (sortingPathArray[s] === "ustensils") {
@@ -156,7 +156,7 @@ export const slowCheck = (sortingPathArray, sortingValues,recipeTarget) => {
         if (recipeTarget === undefined || recipeTarget === bufferedRecipe[0][i]) {
              let pathToken = 0 // for multiple path => mainSearch
             sortingValues.forEach(h => {
-                if (h.length > 0) {
+                if (h.length > 2) {
                     let bufferPathToken = pathToken//ticket de protection contre l'ajout de repetitions
                     sortingPathArray.forEach(s => {
                         if (s === "ingredients") {
