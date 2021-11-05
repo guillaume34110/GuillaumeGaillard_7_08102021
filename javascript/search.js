@@ -68,11 +68,11 @@ const getMainInput = () => {
     const textInput = document.querySelector(".main-search")
     mainSearch[0] = textInput.value.split(" ")
     splitClean(mainSearch[0])
-    console.log(mainSearch[0]);
+  
 }
 /*recherche secondaire pour les tags*/
 const createTagSearch = (e) => {
-    console.log(e,);
+   
     tagSearch[0] = e.target.value.split(" ")
     splitClean(tagSearch[0])
     fillList()// inscrit les tags dans les differentes listes

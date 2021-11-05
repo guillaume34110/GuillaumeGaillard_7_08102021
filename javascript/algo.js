@@ -1,6 +1,7 @@
 import { bufferedRecipe, drawArticle } from "./drawArticle.js"
 
 export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => { //algorythme de recherche avec des boucles for
+  console.log( sortingValues ,'valuues',sortingPathArray,'path' );
     for (let s = 0; s < sortingPathArray.length; s++) {//pour tous les chemins , ingredients, ustenciles ,...
         for (let h = 0; h < sortingValues.length; h++) {//pour toutes les valeurs de l'input
             if (sortingValues[h].length > 2) {// si il y a une valeur a tester
@@ -55,6 +56,7 @@ export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => { 
     }
 }
 export const fastCheck = (sortingPathArray, sortingValues, recipeTarget) => {//algorythme de confirmation (autres champs de l'input) avec des boucles for
+    console.log(recipeTarget , 'recipe' ,sortingValues, 'value',sortingPathArray );
     for (let i = 0; i < bufferedRecipe[0].length; i++) {//pour toutes les recettes du buffer
         if (recipeTarget === undefined || recipeTarget === bufferedRecipe[0][i]) {// permet le test de une ou de toutes les recettes
             let pathToken = 0 //ticket pour la verification
@@ -65,23 +67,27 @@ export const fastCheck = (sortingPathArray, sortingValues, recipeTarget) => {//a
                             for (let a = 0; a < bufferedRecipe[0][i].ingredients.length; a++) {
                                 if (bufferedRecipe[0][i].ingredients[a].ingredient.toLowerCase().includes(sortingValues[h].toLowerCase())) {
                                     pathToken++;
+                                    a =bufferedRecipe[0][i].ingredients.length
                                 }
                             }
                         } else if (sortingPathArray[s] === "ustensils") {
                             for (let a = 0; a < bufferedRecipe[0][i].ustensils.length; a++) {
                                 if (bufferedRecipe[0][i].ustensils[a].toLowerCase().includes(sortingValues[h].toLowerCase())) {
                                     pathToken++;
+                                    a =bufferedRecipe[0][i].ingredients.length
                                 }
                             }
                         } else {
                             if (bufferedRecipe[0][i][sortingPathArray[s]].toLowerCase().includes(sortingValues[h].toLowerCase())) {
                                 pathToken++;
+                               
                             }
                         }
                     }
                 }
             }
             if (pathToken < sortingValues.length) {// si le ticket est plus petit que le nombre de valeur
+                
                 bufferedRecipe[0].splice(i, 1)//on retire l'element
                 i -= 1////////////////////// se recaler dans la liste !!!!!!
                 drawArticle()//re-affichage des élemnets
