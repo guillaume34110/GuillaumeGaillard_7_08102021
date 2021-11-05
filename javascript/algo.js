@@ -1,6 +1,6 @@
 import { bufferedRecipe, drawArticle } from "./drawArticle.js"
 
-export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => { //algorythme avec des boucles for
+export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => { //algorythme de recherche avec des boucles for
 
     for (let s = 0; s < sortingPathArray.length; s++) {//pour tous les chemins , ingredients, ustenciles ,...
         for (let h = 0; h < sortingValues.length; h++) {//pour toutes les valeurs de l'input
@@ -90,8 +90,7 @@ export const fastCheck = (sortingPathArray, sortingValues, recipeTarget) => {//a
         }
     }
 }
-
-/*Algorythme identique avec des boucles forEach*/
+/*Algorythme de recherche te verifications identiques avec des boucles forEach*/
 export const slowAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
     sortingPathArray.forEach(s => {
         sortingValues.forEach(h => {
