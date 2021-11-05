@@ -1,10 +1,10 @@
 import { bufferedRecipe, drawArticle } from "./drawArticle.js"
 
 export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => { //algorythme de recherche avec des boucles for
-  console.log( sortingValues ,'valuues',sortingPathArray,'path' );
+  console.log( sortingValues ,'values',sortingPathArray,'path' );
     for (let s = 0; s < sortingPathArray.length; s++) {//pour tous les chemins , ingredients, ustenciles ,...
         for (let h = 0; h < sortingValues.length; h++) {//pour toutes les valeurs de l'input
-            if (sortingValues[h].length > 2) {// si il y a une valeur a tester
+            if (sortingValues[h].length > 0) {// si il y a une valeur a tester
                 for (let i = 0; i < recipeArray.length; i++) {//pour toutes les recettes
                     if (sortingPathArray[s] === "ingredients") {
                         for (let a = 0; a < recipeArray[i].ingredients.length; a++) {//pour tous les ingredients
@@ -61,7 +61,7 @@ export const fastCheck = (sortingPathArray, sortingValues, recipeTarget) => {//a
         if (recipeTarget === undefined || recipeTarget === bufferedRecipe[0][i]) {// permet le test de une ou de toutes les recettes
             let pathToken = 0 //ticket pour la verification
             for (let h = 0; h < sortingValues.length; h++) {//pour toutes les valeurs de l'input
-                if (sortingValues[h].length > 2) {// si il y a une valeur a tester
+                if (sortingValues[h].length > 0) {// si il y a une valeur a tester
                     for (let s = 0; s < sortingPathArray.length; s++) {//pour tous les chemins
                         if (sortingPathArray[s] === "ingredients") {
                             for (let a = 0; a < bufferedRecipe[0][i].ingredients.length; a++) {
@@ -156,7 +156,7 @@ export const slowCheck = (sortingPathArray, sortingValues,recipeTarget) => {
         if (recipeTarget === undefined || recipeTarget === bufferedRecipe[0][i]) {
              let pathToken = 0 // for multiple path => mainSearch
             sortingValues.forEach(h => {
-                if (h.length > 2) {
+                if (h.length > 0) {
                     let bufferPathToken = pathToken//ticket de protection contre l'ajout de repetitions
                     sortingPathArray.forEach(s => {
                         if (s === "ingredients") {
