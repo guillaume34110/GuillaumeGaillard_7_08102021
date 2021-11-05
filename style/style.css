@@ -1,3 +1,4 @@
+/*settings*/
 body {
   padding: 5vh 5vw;
   font-family: "Lato";
@@ -18,6 +19,7 @@ h1 {
   font-size: 36px;
   line-height: 47px;
 }
+/*serach*/
 .main-search {
   position: relative;
   left: 8px;
@@ -32,6 +34,7 @@ h1 {
   position: relative;
   left: -20px;
 }
+/*dropdown*/
 .dropdown-form {
   display: none;
   width: 40%;

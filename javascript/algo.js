@@ -67,7 +67,7 @@ export const fastCheck = (sortingPathArray, sortingValues, recipeTarget) => {//a
                             for (let a = 0; a < bufferedRecipe[0][i].ingredients.length; a++) {
                                 if (bufferedRecipe[0][i].ingredients[a].ingredient.toLowerCase().includes(sortingValues[h].toLowerCase())) {
                                     pathToken++;
-                                    a =bufferedRecipe[0][i].ingredients.length
+                                    a =bufferedRecipe[0][i].ingredients.length // arret de la boucle pour eviter les doublons (lait de coco , noix de coco )
                                 }
                             }
                         } else if (sortingPathArray[s] === "ustensils") {
@@ -157,12 +157,12 @@ export const slowCheck = (sortingPathArray, sortingValues,recipeTarget) => {
              let pathToken = 0 // for multiple path => mainSearch
             sortingValues.forEach(h => {
                 if (h.length > 0) {
-                    let bufferPathToken = pathToken
+                    let bufferPathToken = pathToken//ticket de protection contre l'ajout de repetitions
                     sortingPathArray.forEach(s => {
                         if (s === "ingredients") {
                             bufferedRecipe[0][i].ingredients.forEach(a => {
                                 if (a.ingredient.toLowerCase().includes(h.toLowerCase())) {
-                                    pathToken = bufferPathToken + 1
+                                    pathToken = bufferPathToken + 1//protection contre l'ajout de repetitions 
                                      
                                 }
                             })
