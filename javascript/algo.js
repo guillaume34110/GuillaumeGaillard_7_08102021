@@ -150,25 +150,27 @@ export const slowAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
         })
     })
 }
+
 export const slowCheck = (sortingPathArray, sortingValues,recipeTarget) => {
     for (let i = 0; i < bufferedRecipe[0].length; i++) {
         if (recipeTarget === undefined || recipeTarget === bufferedRecipe[0][i]) {
              let pathToken = 0 // for multiple path => mainSearch
             sortingValues.forEach(h => {
                 if (h.length > 0) {
+                    let bufferPathToken = pathToken
                     sortingPathArray.forEach(s => {
                         if (s === "ingredients") {
                             bufferedRecipe[0][i].ingredients.forEach(a => {
                                 if (a.ingredient.toLowerCase().includes(h.toLowerCase())) {
-                                    pathToken++;
-                                    throw {}
+                                    pathToken = bufferPathToken + 1
+                                     
                                 }
                             })
                         } else if (s === "ustensils") {
                             bufferedRecipe[0][i].ustensils.forEach(a => {
                                 if (a.toLowerCase().includes(h.toLowerCase())) {
-                                    pathToken++;
-                                    throw {}
+                                    pathToken = bufferPathToken + 1
+                                    
                                 }
                             })
                         } else {
