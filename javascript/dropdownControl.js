@@ -72,7 +72,7 @@ const toggleDropDown = () => {
         icon.style.transform = "rotate(180deg)"
     }
 }
-const tagRecover = (mainArray) => {//recuperation de tous les tags avec une limite 30
+const tagRecover = (mainArray) => {//recuperation de tous les tags 
     
     const tagsArray = []
    for (let i=0 ; i<mainArray.length ; i++) {//récuperation dans la liste voulue
@@ -88,9 +88,9 @@ const tagRecover = (mainArray) => {//recuperation de tous les tags avec une limi
                 if (!tagsArray.includes(ustensil)) tagsArray.push(ustensil)
             })
         }
-        if (tagsArray.length > 30) {
+        /*if (tagsArray.length > 30) { empeche une recette par ingredient correcte car plus de mots clefs
            i=mainArray.length
-        }
+        }*/
     }
     return tagsArray
 }
@@ -164,7 +164,7 @@ const input = document.querySelector(`.${className}`)
 input.value = ""
 tagSearch[0]=[]
 }
-/*creation des tags*/
+/*creation des tags dans la liste*/
 const createTags = (e) => {
     
     const tagsList = document.querySelector(".tags")

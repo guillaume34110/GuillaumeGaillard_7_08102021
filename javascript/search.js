@@ -27,7 +27,7 @@ export const search = () => {
     let sortingValues = mainSearch[0]
     if (sortingValues[0]?.length > 2) {
         sortingToken = true//une recherche a été effectué
-        let sortingPath = ["name", "description", "ingredients"]// les chemins a recherchées
+        let sortingPath = [ "description","name", "ingredients"]// les chemins a recherchées
         fastAlgorytm(recipes, sortingPath, sortingValues)
     }
     sortingValues = ingredientsSearch[0]// nouvelle valeurs de tri
@@ -68,6 +68,7 @@ const getMainInput = () => {
     const textInput = document.querySelector(".main-search")
     mainSearch[0] = textInput.value.split(" ")
     splitClean(mainSearch[0])
+    console.log(mainSearch[0]);
 }
 /*recherche secondaire pour les tags*/
 const createTagSearch = (e) => {
