@@ -11,5 +11,6 @@ Algo:
 ![P7_les_petits_plats_soft (2)](https://user-images.githubusercontent.com/29097422/140351462-2226457f-4884-43a5-b70c-a771b9b2bb23.png)
 ![P7_les_petits_plats_soft (1)](https://user-images.githubusercontent.com/29097422/140351485-f8582428-21d8-4436-b1c6-b9fb7049cd57.png)
 
-![P7_les_petits_plats_soft (4)](https://user-images.githubusercontent.com/29097422/140485021-4651fe8a-064c-4a91-a4ec-b71c14357034.jpg)
-![P7_les_petits_plats_soft (5)](https://user-images.githubusercontent.com/29097422/140485028-3961559a-cf00-4a29-ba1a-e756982d20ca.jpg)
+
+![P7_les_petits_plats_soft (6)](https://user-images.githubusercontent.com/29097422/140491939-cb245105-817c-40cf-9211-dfacbcdc8e94.jpg)
+![P7_les_petits_plats_soft (7)](https://user-images.githubusercontent.com/29097422/140491945-8997e9f9-064c-41f9-8522-d034b67139b4.jpg)
