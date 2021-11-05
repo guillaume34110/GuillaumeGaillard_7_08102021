@@ -1,18 +1,18 @@
 
 
-export let bufferedRecipe = []
+export let bufferedRecipe = [] // les recettes à affichées
 
-
+/*affichage de la recette */
 export const drawArticle = () => {
-const main = document.querySelector('main')
-main.replaceChildren()//clean the main
-bufferedRecipe[0].forEach( (recipe) => {
-    const newArcticle = document.createElement('article')
-    recipe.ingredients.map(e => {
-        if (e.unit === "grammes" )e.unit = "g"
-        else if(e.unit === "cuillères à soupe") e.unit="cuillères"
-    })
-    const newHtml = `
+    const main = document.querySelector('main')
+    main.replaceChildren()
+    bufferedRecipe[0].forEach((recipe) => {// pour chaque recette du buffer
+        const newArcticle = document.createElement('article')
+        recipe.ingredients.map(e => {// pour que les unités correspondent a la maquette
+            if (e.unit === "grammes") e.unit = "g"
+            else if (e.unit === "cuillères à soupe") e.unit = "cuillères"
+        })
+        const newHtml = `
     <img class ="recipe-img" src ="" alt = "">
     <div class = "recipe d-flex flex-column ">
         <div class = "recipe-head mb-3 d-flex justify-content-between align-items-center">
@@ -24,16 +24,22 @@ bufferedRecipe[0].forEach( (recipe) => {
         </div >
         <div class = "d-flex justify-content-between align-items-start">
         <ul>${recipe.ingredients.map(e => {
-            return `<li class = " ingredients ${e}" title="${e}" ><h4>${e.ingredient}</h4><span> ${e.quantity ? ' :' : ''} ${e.quantity ? e.quantity :' '  } ${e.unit ? e.unit : ' '} </span> </li>`
+            return `<li class = " ingredients ${e}" title="${e}" ><h4>${e.ingredient}</h4><span> ${e.quantity ? ' :' : ''} ${e.quantity ? e.quantity : ' '} ${e.unit ? e.unit : ' '} </span> </li>`
         }).join("")}
         </ul>
         <p>${recipe.description}</p>
     </div>
 </div>
     `
-    newArcticle.innerHTML = newHtml
-    main.appendChild(newArcticle)
-})
+        newArcticle.innerHTML = newHtml
+        main.appendChild(newArcticle)// ajout de la nouvelle recette au main
+    })
+    if (bufferedRecipe[0].length === 0) {//si aucune recette n'est dans le buffer ,un message est affiché
+        const newArcticle = document.createElement('article')
+        const newHtml = `<p class ="no-result">Aucune recette ne correspond à votre critère… vous pouvez
+    chercher « tarte aux pommes », « poisson », etc.</p>`
+        newArcticle.innerHTML = newHtml
+        main.appendChild(newArcticle)// ajout de la nouvelle recette au main
+    }
 
-    
 }

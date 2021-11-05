@@ -1,4 +1,4 @@
-export const splitClean = (arrayToClean) => {
+export const splitClean = (arrayToClean) => {//retire les eventuelles erreurs du array
     for (let i =  0 ; i < arrayToClean.length ; i++ ){
         if (arrayToClean[i] === ""){
             arrayToClean.splice(i,1)
