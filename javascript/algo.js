@@ -1,10 +1,10 @@
 import { bufferedRecipe, drawArticle } from "./drawArticle.js"
 
 export const fastAlgorytm = (recipeArray, sortingPathArray, sortingValues) => { //algorythme de recherche avec des boucles for
-  console.log( sortingValues ,'valuues',sortingPathArray,'path' );
+  console.log( sortingValues ,'values',sortingPathArray,'path' );
     for (let s = 0; s < sortingPathArray.length; s++) {//pour tous les chemins , ingredients, ustenciles ,...
         for (let h = 0; h < sortingValues.length; h++) {//pour toutes les valeurs de l'input
-            if (sortingValues[h].length > 2) {// si il y a une valeur a tester
+            if (sortingValues[h].length > 0) {// si il y a une valeur a tester
                 for (let i = 0; i < recipeArray.length; i++) {//pour toutes les recettes
                     if (sortingPathArray[s] === "ingredients") {
                         for (let a = 0; a < recipeArray[i].ingredients.length; a++) {//pour tous les ingredients
@@ -67,7 +67,7 @@ export const fastCheck = (sortingPathArray, sortingValues, recipeTarget) => {//a
                             for (let a = 0; a < bufferedRecipe[0][i].ingredients.length; a++) {
                                 if (bufferedRecipe[0][i].ingredients[a].ingredient.toLowerCase().includes(sortingValues[h].toLowerCase())) {
                                     pathToken++;
-                                    a =bufferedRecipe[0][i].ingredients.length // arret de la boucle pour eviter les doublons (lait de coco , noix de coco )
+                                    a = bufferedRecipe[0][i].ingredients.length // arret de la boucle pour eviter les doublons (lait de coco , noix de coco )
                                 }
                             }
                         } else if (sortingPathArray[s] === "ustensils") {
