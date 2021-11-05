@@ -147,9 +147,9 @@ export const slowAlgorytm = (recipeArray, sortingPathArray, sortingValues) => {
 export const slowCheck = (sortingPathArray, sortingValues) => {
     for (let i = 0; i < bufferedRecipe[0].length; i++) {
         if (recipeTarget === undefined || recipeTarget === bufferedRecipe[0][i]) {
+             let pathToken = 0 // for multiple path => mainSearch
             sortingValues.forEach(h => {
                 if (h.length > 0) {
-                    let pathToken = 0 // for multiple path => mainSearch
                     sortingPathArray.forEach(s => {
                         if (s === "ingredients") {
                             bufferedRecipe[0][i].ingredients.forEach(a => {
